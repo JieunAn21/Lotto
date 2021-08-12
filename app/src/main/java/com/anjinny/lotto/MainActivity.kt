@@ -6,6 +6,7 @@ import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 
 class MainActivity : AppCompatActivity() {
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                 tvNumberList[index].apply {
                     this.text = number.toString()
                     this.isVisible = true
+                    setNumberBackground(number, this)
                 }
             }
         }
@@ -104,8 +106,9 @@ class MainActivity : AppCompatActivity() {
             pickNumberSet.add(pickNumber)
 
             tvNumberList[pickNumberSet.size].apply {
-                isVisible = true
                 text = pickNumber.toString()
+                isVisible = true
+                setNumberBackground(pickNumber, this)
             }
         }
     }
@@ -118,6 +121,16 @@ class MainActivity : AppCompatActivity() {
             tvNumberList.forEach {
                 it.isVisible = false
             }
+        }
+    }
+
+    private fun setNumberBackground(number: Int, textView: TextView) {
+        textView.background = when (number) {
+            in 1..10 -> ContextCompat.getDrawable(this, R.drawable.circle_yellow)
+            in 11..20 -> ContextCompat.getDrawable(this, R.drawable.circle_blue)
+            in 21..30 -> ContextCompat.getDrawable(this, R.drawable.circle_red)
+            in 31..40 -> ContextCompat.getDrawable(this, R.drawable.circle_gray)
+            else -> ContextCompat.getDrawable(this, R.drawable.circle_green)
         }
     }
 }
